@@ -1,52 +1,127 @@
-import { Axios } from "axios";
-import { useState } from "react"
-import { replace, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateClient = () => {
-    const [client, setClient] = useState({ nom: "", adresse: "", tel: "" });
+    const [client, setClient] = useState({
+        nom: "",
+        adresse: "",
+        tel: ""
+    });
+
     const navigate = useNavigate();
 
-    const handleCreate = async () => {
-        await Axios.post("http://localhost:3001/clients", client);
-        navigate("/client", { replace: true })
-    }
+    const handleCreate = async (e) => {
+        e.preventDefault();
+
+        await axios.post("http://localhost:3001/clients", client);
+        navigate("/clients", { replace: true });
+    };
 
     return (
-        <div>
-            <center>
-                <h1>Créer un nouveau client</h1>
-                <form>
-                    <label>Nom du client : </label>
-                    <input 
-                        type="text" 
-                        value={ client.nom }
-                        onClick={(e) => setClient({ ...client, nom: e.target.value })}
-                    />
-                    <br/>
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div className="card shadow-sm">
+                        <div className="card-body">
+                            <h3 className="text-center mb-4 fw-bold">
+                                <i className="fa-solid fa-user-plus me-2 text-success"></i>
+                                Nouveau client
+                            </h3>
 
-                    <label>Adresse du client : </label>
-                    <input 
-                        type="text" 
-                        value={ client.adresse }
-                        onClick={(e) => setClient({ ...client, adresse: e.target.value })}
-                    />
-                    <br/>
+                            <form onSubmit={handleCreate}>
+                                {/* Nom */}
+                                <div className="mb-3">
+                                    <label className="form-label">
+                                        Nom du client
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fa-solid fa-user"></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Nom du client"
+                                            value={client.nom}
+                                            onChange={(e) =>
+                                                setClient({ ...client, nom: e.target.value })
+                                            }
+                                            required
+                                        />
+                                    </div>
+                                </div>
 
-                    <label>Tel du client : </label>
-                    <input 
-                        type="tel" 
-                        value={ client.tel }
-                        onClick={(e) => setClient({ ...client, tel: e.target.value })}
-                    />
-                    <br/>
+                                {/* Adresse */}
+                                <div className="mb-3">
+                                    <label className="form-label">
+                                        Adresse
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fa-solid fa-location-dot"></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Adresse du client"
+                                            value={client.adresse}
+                                            onChange={(e) =>
+                                                setClient({ ...client, adresse: e.target.value })
+                                            }
+                                            required
+                                        />
+                                    </div>
+                                </div>
 
-                    <button onClick={handleCreate}>
-                        Créer
-                    </button>
-                </form>
-            </center>
+                                {/* Téléphone */}
+                                <div className="mb-4">
+                                    <label className="form-label">
+                                        Téléphone
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fa-solid fa-phone"></i>
+                                        </span>
+                                        <input
+                                            type="tel"
+                                            className="form-control"
+                                            placeholder="Numéro de téléphone"
+                                            value={client.tel}
+                                            onChange={(e) =>
+                                                setClient({ ...client, tel: e.target.value })
+                                            }
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Boutons */}
+                                <div className="d-flex justify-content-between">
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success"
+                                    >
+                                        <i className="fa-solid fa-check me-1"></i>
+                                        Créer
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary"
+                                        onClick={() => navigate("/clients")}
+                                    >
+                                        <i className="fa-solid fa-arrow-left me-1"></i>
+                                        Annuler
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default CreateClient
+export default CreateClient;

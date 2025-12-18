@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -6,8 +6,12 @@ const ClientsList = () => {
     const [clients, setClients] = useState([]);
 
     const fetchData = async () => {
-        const reponse = await axios.get("http://localhost:3001/clients");
-        setClients(reponse.data);
+        try {
+            const response = await axios.get("http://localhost:3001/clients");
+            setClients(response.data);
+        } catch (error) {
+            console.error("Erreur lors du chargement des clients :", error);
+        }
     };
 
     useEffect(() => {
@@ -15,54 +19,90 @@ const ClientsList = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        await axios.detele(`http://localhost:3001/clients/${id}`);
-        fetchData();
-    }
+        if (window.confirm("Voulez-vous vraiment supprimer ce client ?")) {
+            await axios.delete(`http://localhost:3001/clients/${id}`);
+            fetchData();
+        }
+    };
 
     return (
-        <div>
-            <center>
-                <h1>Liste des clients</h1>
-                <Link to={`clients/create`}>
+        <div className="container mt-5">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2 className="fw-bold">
+                    <i className="fa-solid fa-users me-2 text-primary"></i>
+                    Liste des clients
+                </h2>
+
+                <Link to="/clients/create" className="btn btn-success btn-sm">
+                    <i className="fa-solid fa-plus me-1"></i>
                     Ajouter
                 </Link>
-                <br />
-                <br />
+            </div>
 
-                <table style={{ border: "1px solid black" }}>
-                    <thead>
+            <div className="table-responsive shadow-sm rounded">
+                <table className="table table-hover align-middle text-center mb-0">
+                    <thead className="table-light">
                         <tr>
-                            <th>Identifiant</th>
-                            <th>Nom client</th>
+                            <th>#</th>
+                            <th>Nom</th>
                             <th>Adresse</th>
                             <th>Téléphone</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {clients.map((client) => (
-                            <tr key={client.id}>
-                                <td>{client.id}</td>
-                                <td>
-                                    <Link to={`/clients/${client.id}`}>{client.nom}</Link>
-                                </td>
-                                <td>{client.adresse}</td>
-                                <td>{client.tel}</td>
-                                <td>
-                                    <Link to={`clients/${client.id}/update`}>
-                                        <button>Modifier</button>
-                                    </Link>
 
-                                    <button onClick={() => handleDelete(client.id)}>
-                                        Supprimer
-                                    </button>
+                    <tbody>
+                        {clients.length > 0 ? (
+                            clients.map((client, index) => (
+                                <tr key={client.id}>
+                                    <td className="fw-semibold">{index + 1}</td>
+
+                                    <td>
+                                        <Link
+                                            to={`/clients/${client.id}`}
+                                            className="text-decoration-none fw-semibold"
+                                        >
+                                            {client.nom}
+                                        </Link>
+                                    </td>
+
+                                    <td className="text-muted">{client.adresse}</td>
+
+                                    <td>
+                                        <span className="badge bg-secondary">
+                                            {client.tel}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <div className="d-flex justify-content-center gap-2">
+                                            <Link
+                                                to={`/clients/${client.id}/update`}
+                                                className="btn btn-outline-primary btn-sm"
+                                            >
+                                                Modifier
+                                            </Link>
+
+                                            <button
+                                                className="btn btn-outline-danger btn-sm"
+                                                onClick={() => handleDelete(client.id)}
+                                            >
+                                                Supprimer
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="text-muted py-4">
+                                    Aucun client trouvé
                                 </td>
                             </tr>
-                        )
                         )}
                     </tbody>
                 </table>
-            </center>
+            </div>
         </div>
     );
 };
