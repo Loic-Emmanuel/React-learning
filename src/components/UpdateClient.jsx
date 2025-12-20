@@ -48,7 +48,6 @@ const UpdateClient = () => {
                             </h3>
 
                             <form onSubmit={handleUpdate}>
-                                {/* Nom */}
                                 <div className="mb-3">
                                     <label className="form-label">
                                         Nom du client
@@ -72,7 +71,6 @@ const UpdateClient = () => {
                                     </div>
                                 </div>
 
-                                {/* Adresse */}
                                 <div className="mb-3">
                                     <label className="form-label">
                                         Adresse
@@ -96,7 +94,6 @@ const UpdateClient = () => {
                                     </div>
                                 </div>
 
-                                {/* Téléphone */}
                                 <div className="mb-4">
                                     <label className="form-label">
                                         Téléphone
@@ -120,7 +117,6 @@ const UpdateClient = () => {
                                     </div>
                                 </div>
 
-                                {/* Actions */}
                                 <div className="d-flex justify-content-between">
                                     <button
                                         type="submit"

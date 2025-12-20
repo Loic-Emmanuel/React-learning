@@ -30,7 +30,6 @@ const CreateClient = () => {
                             </h3>
 
                             <form onSubmit={handleCreate}>
-                                {/* Nom */}
                                 <div className="mb-3">
                                     <label className="form-label">
                                         Nom du client
@@ -52,7 +51,6 @@ const CreateClient = () => {
                                     </div>
                                 </div>
 
-                                {/* Adresse */}
                                 <div className="mb-3">
                                     <label className="form-label">
                                         Adresse
@@ -74,7 +72,6 @@ const CreateClient = () => {
                                     </div>
                                 </div>
 
-                                {/* Téléphone */}
                                 <div className="mb-4">
                                     <label className="form-label">
                                         Téléphone
@@ -96,7 +93,6 @@ const CreateClient = () => {
                                     </div>
                                 </div>
 
-                                {/* Boutons */}
                                 <div className="d-flex justify-content-between">
                                     <button
                                         type="submit"

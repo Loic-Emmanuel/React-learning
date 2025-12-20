@@ -1,12 +1,6 @@
 {
   "clients": [
     {
-      "id": "3",
-      "nom": "Traoré Moussaaaaa",
-      "adresse": "Bouaké, Quartier 5",
-      "tel": "+225 05 67 89 10"
-    },
-    {
       "id": "4",
       "nom": "N'dri Fatou",
       "adresse": "San Pedro, Rue du Port",
