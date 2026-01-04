@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = "http://localhost:8000/api";
+
 const ClientDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -11,7 +13,7 @@ const ClientDetails = () => {
         const fetchClient = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3001/clients/${id}`
+                    `${API_URL}/clients/${id}`
                 );
                 setClient(response.data);
             } catch (error) {
@@ -47,34 +49,22 @@ const ClientDetails = () => {
 
                             <ul className="list-group list-group-flush mb-4">
                                 <li className="list-group-item">
-                                    <strong>
-                                        <i className="fa-solid fa-hashtag me-2 text-secondary"></i>
-                                        Identifiant :
-                                    </strong>
+                                    <strong>Identifiant :</strong>
                                     <span className="ms-2">{client.id}</span>
                                 </li>
 
                                 <li className="list-group-item">
-                                    <strong>
-                                        <i className="fa-solid fa-user me-2 text-secondary"></i>
-                                        Nom :
-                                    </strong>
+                                    <strong>Nom :</strong>
                                     <span className="ms-2">{client.nom}</span>
                                 </li>
 
                                 <li className="list-group-item">
-                                    <strong>
-                                        <i className="fa-solid fa-location-dot me-2 text-secondary"></i>
-                                        Adresse :
-                                    </strong>
+                                    <strong>Adresse :</strong>
                                     <span className="ms-2">{client.adresse}</span>
                                 </li>
 
                                 <li className="list-group-item">
-                                    <strong>
-                                        <i className="fa-solid fa-phone me-2 text-secondary"></i>
-                                        Téléphone :
-                                    </strong>
+                                    <strong>Téléphone :</strong>
                                     <span className="ms-2">{client.tel}</span>
                                 </li>
                             </ul>
@@ -84,7 +74,6 @@ const ClientDetails = () => {
                                     className="btn btn-outline-secondary"
                                     onClick={() => navigate("/clients")}
                                 >
-                                    <i className="fa-solid fa-arrow-left me-1"></i>
                                     Retour
                                 </button>
 
@@ -94,7 +83,6 @@ const ClientDetails = () => {
                                         navigate(`/clients/${client.id}/update`)
                                     }
                                 >
-                                    <i className="fa-solid fa-pen me-1"></i>
                                     Modifier
                                 </button>
                             </div>

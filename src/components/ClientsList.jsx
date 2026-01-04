@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = "http://localhost:8000/api";
+
 const ClientsList = () => {
     const [clients, setClients] = useState([]);
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:3001/clients");
+            const response = await axios.get(`${API_URL}/clients`);
             setClients(response.data);
         } catch (error) {
             console.error("Erreur lors du chargement des clients :", error);
@@ -20,8 +22,12 @@ const ClientsList = () => {
 
     const handleDelete = async (id) => {
         if (window.confirm("Voulez-vous vraiment supprimer ce client ?")) {
-            await axios.delete(`http://localhost:3001/clients/${id}`);
-            fetchData();
+            try {
+                await axios.delete(`${API_URL}/clients/${id}`);
+                fetchData();
+            } catch (error) {
+                console.error("Erreur lors de la suppression :", error);
+            }
         }
     };
 
