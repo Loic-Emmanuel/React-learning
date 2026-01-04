@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = "http://localhost:8000/api";
+
 const UpdateClient = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -16,7 +18,7 @@ const UpdateClient = () => {
         const fetchClient = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3001/clients/${id}`
+                    `${API_URL}/clients/${id}`
                 );
                 setClient(response.data);
             } catch (error) {
@@ -32,7 +34,7 @@ const UpdateClient = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
 
-        await axios.put(`http://localhost:3001/clients/${id}`, client);
+            await axios.put(`${API_URL}/clients/${id}`, client);
         navigate("/clients", { replace: true });
     };
 

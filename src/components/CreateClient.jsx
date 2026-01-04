@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = "http://localhost:8000/api";
+
 const CreateClient = () => {
     const [client, setClient] = useState({
         nom: "",
@@ -14,7 +16,7 @@ const CreateClient = () => {
     const handleCreate = async (e) => {
         e.preventDefault();
 
-        await axios.post("http://localhost:3001/clients", client);
+        await axios.post(`${API_URL}/clients`, client);
         navigate("/clients", { replace: true });
     };
 
